@@ -1,0 +1,25 @@
+{
+  "version": "0.2",
+  "language": "en,es",
+  "words": [
+    "arcjet",
+    "betterauth",
+    "cloudinary",
+    "commitlint",
+    "cors",
+    "dotenv",
+    "drizzle",
+    "express",
+    "lintstagedrc",
+    "lmgs",
+    "lucia",
+    "neondb",
+    "orm",
+    "pooler",
+    "postgres",
+    "postgresql",
+    "sslmode",
+    "uuidv4"
+  ],
+  "ignorePaths": ["node_modules/**", "dist/**", "src/db/migrations/**", "**/*.sql", "**/*.env"]
+}

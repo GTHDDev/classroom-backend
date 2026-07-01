@@ -11,12 +11,10 @@ router.get('/', async (req, res) => {
 
     const currentPage = Math.max(1, +page);
     const limitPerPage = Math.max(1, +limit);
-
     const offset = (currentPage - 1) * limitPerPage;
 
     const filterConditions = [];
 
-    // If department filter exists, filter by subject name OR subject code
     if (search) {
       filterConditions.push(
         or(ilike(subjects.name, `%${search}%`), ilike(subjects.code, `%${search}%`)),
@@ -24,7 +22,7 @@ router.get('/', async (req, res) => {
     }
 
     if (department) {
-      filterConditions.push(or(ilike(departments.name, `%${search}%`)));
+      filterConditions.push(ilike(departments.name, `%${department}%`));
     }
 
     const whereClause = filterConditions.length > 0 ? and(...filterConditions) : undefined;
@@ -40,10 +38,13 @@ router.get('/', async (req, res) => {
     const subjectsList = await db
       .select({
         ...getTableColumns(subjects),
-        departments: { ...getTableColumns(departments) },
+        department: {
+          ...getTableColumns(departments),
+        },
       })
       .from(subjects)
       .leftJoin(departments, eq(subjects.departmentId, departments.id))
+      .where(whereClause)
       .orderBy(desc(subjects.createdAt))
       .limit(limitPerPage)
       .offset(offset);
@@ -57,9 +58,9 @@ router.get('/', async (req, res) => {
         totalPages: Math.ceil(totalCount / limitPerPage),
       },
     });
-  } catch (e) {
-    console.error(`GET /subjects error: ${e}`);
-    res.status(500).json({ error: 'Failed to get subjects' });
+  } catch (error) {
+    console.error('GET /subjects error:', error);
+    res.status(500).json({ error: 'Failed to fetch subjects' });
   }
 });
 

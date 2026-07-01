@@ -1,26 +1,29 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import SubjectRouter from './routes/subjects';
+import subjectsRouter from './routes/subjects';
 
 const app = express();
 const PORT = 8000;
 
-app.use(express.json());
-
-app.use('/api/subjects', SubjectRouter);
+const frontendOrigin = process.env.FRONTEND_URL?.replace(/\/$/, '');
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: frontendOrigin,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   }),
 );
 
+app.use(express.json());
+
+app.use('/api/subjects', subjectsRouter);
+
 app.get('/', (req, res) => {
-  res.send('Hello, this  the classroom API');
+  res.send('Backend server is running!');
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running at port: ${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });

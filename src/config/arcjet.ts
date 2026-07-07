@@ -8,7 +8,7 @@ if (!process.env.ARCJET_KEY && process.env.NODE_ENV !== 'test') {
 
 // Configure Arcjet with security rules.
 const aj = arcjet({
-  key: process.env.ARCJET_KEY,
+  key: process.env.ARCJET_KEY!,
   rules: [
     shield({ mode: 'LIVE' }),
     // Create a bot detection rule

@@ -2,10 +2,10 @@ import AgentApi from 'apminsight';
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import subjectsRouter from './routes/subjects';
+import subjectsRouter from './routes/subjects.js';
 import securityMiddleware from './middleware/security';
 import { toNodeHandler } from 'better-auth/node';
-import { auth } from './lib/auth';
+import { auth } from './lib/auth.js';
 
 AgentApi.config();
 

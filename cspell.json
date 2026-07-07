@@ -17,6 +17,7 @@
     "lucia",
     "neondatabase",
     "neondb",
+    "nodenext",
     "orm",
     "pooler",
     "postgres",
